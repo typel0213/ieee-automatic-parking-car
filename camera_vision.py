@@ -93,9 +93,9 @@ def cannyEdgeDetection(grayBlurFrame, lowerThresh, upperThresh):
 
 def detectContours(cannyOrThreshFrame, showOriginal=False):
     blankBlack=np.zeros_like(cannyOrThreshFrame)
-    contours, hierarchy = cv.findCountours(cannyOrThreshFrame, cv.RETR_LIST, cv.CHAIN_APPROX_NONE)
+    contours, hierarchy = cv.findContours(cannyOrThreshFrame, cv.RETR_LIST, cv.CHAIN_APPROX_NONE)
     if showOriginal==True:
-        return cv.drawContours(cannyOrThreshFrame, contours, -1, (0,0,255), 2) #countourIDX=-1 means draw all the contours
+        return cv.drawContours(cannyOrThreshFrame, contours, -1, (0,0,255), 2) #contourIDX=-1 means draw all the contours
     else:
         return cv.drawContours(blankBlack, contours, -1, (255,255,255), 1)
 
