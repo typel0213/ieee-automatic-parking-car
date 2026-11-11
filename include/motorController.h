@@ -8,7 +8,7 @@ public:
     void backward(float speed);
     void rotateLeft(float speed);
     void rotateRight(float speed);
-
+    void steer(float speed, float correction);
     void stop();
 };
 
