@@ -1,28 +1,29 @@
 #include "motorController.h"
 #include "GPIOController.h"
+#include <algorithm>
 
 void motorController::setMotors(float left, float right) {
     // Implementation to set motor speeds
-    left = std::clamp(left, -100.0f, 100.0f);
-    right = std::clamp(right, -100.0f, 100.0f);
+    left = std::clamp(left, -1.0f, 1.0f);
+    right = std::clamp(right, -1.0f, 1.0f);
 }
 
-void motorController::forward(int speed) {
+void motorController::forward(float speed) {
     //Implement forward movement
     setMotors(speed, speed);
 }
 
-void motorController::backward(int speed) {
+void motorController::backward(float speed) {
     //Implement backward movement
-    setMotors(speed, speed);
+    setMotors(-speed, -speed);
 }
 
-void motorController::rotateLeft(int speed) {
+void motorController::rotateLeft(float speed) {
     //Implement left rotation
     setMotors(-speed, speed);
 }
 
-void motorController::rotateRight(int speed) {
+void motorController::rotateRight(float speed) {
     //Implement right rotation
     setMotors(speed, -speed);
 }

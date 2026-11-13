@@ -3,8 +3,6 @@
 
 class GPIOController {
     public:
-
-
         //Left Motor
         static constexpr int AIN1 = 0;
         static constexpr int AIN2 = 0;
@@ -23,6 +21,9 @@ class GPIOController {
         void setPin(int pinNumber, bool value);
         void setPWM(int pinNumber, float dutyCycle);
         void stopAll();
+        
+    private:
+        gpiod_line_request* request = nullptr;
     
 
 };
