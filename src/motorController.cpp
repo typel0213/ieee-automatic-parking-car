@@ -13,27 +13,38 @@ void motorController::setMotors(float left, float right) {
     if(!std::isfinite(left) || !std::isfinite(right)) {
         throw std::invalid_argument("Invalid motor speed");
     }
+    try {
+        // Implementation to set motor speeds
+        left = std::clamp(left, -100.0f, 100.0f);
+        right = std::clamp(right, -100.0f, 100.0f);
 
-    // Implementation to set motor speeds
-    left = std::clamp(left, -100.0f, 100.0f);
-    right = std::clamp(right, -100.0f, 100.0f);
+        gpio.setPin(GPIOController::STBY, false);
 
-    gpio.setPin(GPIOController::STBY, false);
+        gpio.setPWM(GPIOController::PWMA, 0.0f);
+        gpio.setPWM(GPIOController::PWMB, 0.0f);
 
-    gpio.setPWM(GPIOController::PWMA, 0.0f);
-    gpio.setPWM(GPIOController::PWMB, 0.0f);
+        gpio.setPin(GPIOController::AIN1, left > 0);
+        gpio.setPin(GPIOController::AIN2, left < 0);
 
-    gpio.setPin(GPIOController::AIN1, left > 0);
-    gpio.setPin(GPIOController::AIN2, left < 0);
+        gpio.setPin(GPIOController::BIN1, right > 0);
+        gpio.setPin(GPIOController::BIN2, right < 0);
 
-    gpio.setPin(GPIOController::BIN1, right > 0);
-    gpio.setPin(GPIOController::BIN2, right < 0);
+        gpio.setPWM(GPIOController::PWMA, std::abs(left));
+        gpio.setPWM(GPIOController::PWMB, std::abs(right));
 
-    gpio.setPWM(GPIOController::PWMA, std::abs(left));
-    gpio.setPWM(GPIOController::PWMB, std::abs(right));
-
-    if(left != 0.0f || right != 0.0f) {
-        gpio.setPin(GPIOController::STBY, true);
+        if(left != 0.0f || right != 0.0f) {
+            gpio.setPin(GPIOController::STBY, true);
+        }
+    }
+    catch (...) {
+        try { 
+            gpio.setPin(GPIOController::STBY, false);
+        }
+        catch (...) {
+            
+        }
+        
+        throw;
     }
 }   
 

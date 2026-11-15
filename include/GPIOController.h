@@ -11,12 +11,12 @@ class GPIOController {
 
         //Left Motor
         static constexpr int AIN1 = 27;
-        static constexpr int AIN2 = 22;
+        static constexpr int AIN2 = 23;
         static constexpr int PWMA = 18;
 
         //Right Motor
         static constexpr int BIN1 = 5;
-        static constexpr int BIN2 = 6;
+        static constexpr int BIN2 = 12;
         static constexpr int PWMB = 19;
 
         static constexpr int STBY = 24;
