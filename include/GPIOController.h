@@ -10,7 +10,7 @@ class GPIOController {
         GPIOController& operator=(const GPIOController&) = delete;
 
         //Left Motor
-        static constexpr int AIN1 = 27;
+        static constexpr int AIN1 = 22;
         static constexpr int AIN2 = 23;
         static constexpr int PWMA = 18;
 
