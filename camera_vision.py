@@ -99,29 +99,78 @@ def detectContours(cannyOrThreshFrame, showOriginal=False):
     else:
         return cv.drawContours(blankBlack, contours, -1, (255,255,255), 1)
 
-#hough line transform
+"""
+Gets lines from a frame
+
+Args:
+    frame: the frame that the lines will be extracted from
+    lowBoundColor: lower bound for colors to include for line detection
+    highBoundColor: higher bound for colors to include for line detection
+
+Returns:
+    2D array of lines found, where each element is a 1D array in the format,
+    [x1, y1, x2, y2], where the line starts and ends
+"""
+def getLines(frame, lowBoundColor, highBoundColor):
+    frame = cv.GaussianBlur(frame, (5, 5), 0)
+    hsv = toHSV(frame);
+    mask = cv.inRange(hsv, lowBoundColor, highBoundColor)
+
+    # grabs just the edges detected of colors within the range of lowBoundColor - highBoundColor
+    edges = cv.Canny(mask, 75, 150)
+
+    lines = cv.HoughLinesP(edges, 1, np.pi/180, 50, maxLineGap=50)
+
+        
+    return lines
 
 #contour geometry
 
 #morphological transformations
+
+def lineDetectionTest(video, loop=False):
+    while True:
+        ret, frame = video.read()
+        if not ret or frame is None:
+            if loop:
+                video = cv.VideoCapture("testvideo.mp4") # loops video if over
+                continue
+            break
+        low_color = np.array([18, 94, 140])
+        high_color = np.array([40, 255, 255])
+        lines = getLines(frame, low_color, high_color)
+        if lines is not None:
+            # eg, if image had lines
+            for line in lines:
+                print(line)
+                x1, y1, x2, y2 = map(int, line) # line[0] is a 1D array
+                cv.line(frame, (x1, y1), (x2, y2), (255, 0, 0), 5) # draws line for visual representation
+        cv.imshow("og video frame", frame)
+
+        key = cv.waitKey(25)
+        if key == 27:
+            break
+    video.release()
+    cv.destroyAllWindows()
 
 def displayFrame(frame):
     cv.imshow("Video", frame)
     cv.waitKey(40)
 
 def main():
-    path = (r"")#int arg (0,1,2,3) or a path to a vidoe file if using webcam, we need to webcam: integer (0) if multiple cameras, 1 for camera, etc (you just need to connect them))
+    path = ("testvideo.mp4")#int arg (0,1,2,3) or a path to a video file if using webcam, we need to webcam: integer (0) if multiple cameras, 1 for camera, etc (you just need to connect them))
     video = readVideo(path) 
+    lineDetectionTest(video)
     
-    while True: #capture frames forever until we tell it to break    
-        isTrue, frame = video.read()
-        print("Frame captured:", isTrue)
+    # while True: #capture frames forever until we tell it to break    
+    #     isTrue, frame = video.read()
+    #     print("Frame captured:", isTrue)
 
-        if not isTrue: ##or press a key to break
-            print("Video ended or frame could not be read!")
-            break
+    #     if not isTrue: ##or press a key to break
+    #         print("Video ended or frame could not be read!")
+    #         break
 
-        displayFrame(frame)
+        # displayFrame(frame)
                 
     video.release()
     cv.destroyAllWindows()
