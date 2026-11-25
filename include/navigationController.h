@@ -9,11 +9,6 @@ class navigationController {
     private:
         motorController& motor;
 
-        enum class centerState {
-            CENTERED,
-            OFFCENTERED,
-            REALIGNING
-        }
 }
 
 #endif

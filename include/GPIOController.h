@@ -9,12 +9,12 @@ class GPIOController {
         GPIOController(const GPIOController&) = delete;
         GPIOController& operator=(const GPIOController&) = delete;
 
-        //Left Motor
+        //Left Motor pins
         static constexpr int AIN1 = 22;
         static constexpr int AIN2 = 23;
         static constexpr int PWMA = 18;
 
-        //Right Motor
+        //Right Motor pins
         static constexpr int BIN1 = 5;
         static constexpr int BIN2 = 12;
         static constexpr int PWMB = 19;

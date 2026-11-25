@@ -9,15 +9,6 @@ class parkingController {
         void parkLeft();
     private:
         motorController& motor;
-
-        enum class ParkingState {
-            IDLE,
-            ROTATING,
-            MOVING_FORWARD,
-            MOVING_BACKWARD,
-            PARKED,
-            ERROR
-        };
 };
 
 #endif

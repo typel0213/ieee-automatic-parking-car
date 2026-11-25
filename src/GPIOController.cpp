@@ -79,7 +79,7 @@ void GPIOController::writePWMFile(const std::string& path, int value) {
 void GPIOController::initializePWM() {
     std::string pwm0 = pwmPath + "/pwm0";
     std::string pwm1 = pwmPath + "/pwm1";
-
+    
     writePWMFile(pwm0 + "/enable", 0);
     writePWMFile(pwm1 + "/enable", 0);
 
