@@ -5,7 +5,8 @@
 
 class parkingController {
     public:
-        void park();
+        void parkRight();
+        void parkLeft();
     private:
         motorController& motor;
 
