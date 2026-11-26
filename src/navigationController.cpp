@@ -1,5 +1,7 @@
 #include "navigationController.h"
 #include "motorController.h"
+#include "gyroController.h"
+#include "stateMachine.h"
 
 #include <iostream>
 #include <thread>

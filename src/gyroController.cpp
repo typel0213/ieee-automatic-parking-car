@@ -61,8 +61,8 @@ float gyroController::readGyro() {
         throw std::runtime_error("Failed to read all registers");
     }
 
-    float x = (int16_t)((data[0]) << 8 | data[1]) / GYRO_SENS;
-    float y = (int16_t)((data[2]) << 8 | data[3]) / GYRO_SENS;
+    //float x = (int16_t)((data[0]) << 8 | data[1]) / GYRO_SENS;
+    //float y = (int16_t)((data[2]) << 8 | data[3]) / GYRO_SENS;
     float z = (int16_t)((data[4]) << 8 | data[5]) / GYRO_SENS;
 
     return z;

@@ -2,13 +2,16 @@
 #define PARKINGCONTROLLER_H
 
 #include "motorController.h"
+#include "gyroController.h"
 
 class parkingController {
     public:
-        void parkRight();
-        void parkLeft();
+        explicit parkingController(motorController& motor, gyroController& gyro);
+        bool rotateToAngle(float angle);
+        void parking();
     private:
         motorController& motor;
+        gyroController& gyro;
 };
 
 #endif
