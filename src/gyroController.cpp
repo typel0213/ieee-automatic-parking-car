@@ -85,7 +85,7 @@ void gyroController::updateHeading() {
     if(isCalibrated == false) {
         return;
     }
-    else if (!hasPreviousTime){
+    else if (!hasPreviousTime) {
         previousTime = std::chrono::steady_clock::now();
         hasPreviousTime = true;
         return;

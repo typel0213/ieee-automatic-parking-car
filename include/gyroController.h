@@ -14,7 +14,6 @@ class gyroController {
 
         gyroController();
         ~gyroController();
-        float readGyro();
         void calibrateGyro();
         void updateHeading();
         float getHeading();

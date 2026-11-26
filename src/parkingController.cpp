@@ -6,31 +6,48 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <cmath>
 
 parkingController::parkingController(motorController& motorControl, gyroController& gyroControl) : motor(motorControl) : gyro(gyroControl){
     
 }
 
-void parkingController::parking() {
-    motor.forward(30.0f);
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    rotateToAngle(angle);
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    motor.stop();
-}
-
-bool parkingController::rotateToAngle(float angle) {
+parkingController::rotation parkingController::rotateToAngle(float angle) {
     float currentHeading = gyro.getHeading();
-    float newHeading = currentHeading + angle;
-    while(gyro.getHeading() != newHeading) {
-        if(newHeading < currentHeading)
-            motor.rotateRight(50.0f);
-        else if(newHeading > currentHeading) {
-            motor.rotateLeft(50.0f);
-        }
+    if(currentRotation == rotation::FAILED) {
+        motor.stop();
+        return currentRotation;
     }
-    if(gyro.getHeading() == newHeading) {
-        return true;
+    if(currentRotation == rotation::COMPLETE) {
+        motor.stop();
+        return currentRotation;
     }
-    return false;
+
+    if(currentRotation == rotation::IDLE) {
+        targetHeading = currentHeading + angle;
+        rotationStartTime = std::chrono::steady_clock::now();
+        currentRotation = rotation::RUNNING;
+    }
+
+    std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
+
+    if(currentRotation == rotation::RUNNING && ((currentTime - rotationStartTime) > std::chrono::milliseconds(5000))) {
+        motor.stop();
+        currentRotation = rotation::FAILED;
+        return currentRotation;
+    }
+    
+    if(currentRotation == rotation::RUNNING && (std::abs(targetHeading - currentHeading) < 3.0f)) {
+        currentRotation = rotation::COMPLETE;
+        motor.stop();
+        return currentRotation;
+    }
+
+    if(targetHeading < currentHeading && currentRotation == rotation::RUNNING) {
+        motor.rotateRight(30.0f);
+    }
+    else if(targetHeading > currentHeading && currentRotation == rotation::RUNNING) {
+        motor.rotateLeft(30.0f);
+    }
+    return currentRotation;
 }

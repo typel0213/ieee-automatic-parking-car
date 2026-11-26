@@ -8,7 +8,6 @@ class navigationController {
         void realignCar(float correction);
     private:
         motorController& motor;
-
 }
 
 #endif
