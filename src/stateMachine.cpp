@@ -2,37 +2,37 @@
 
 void stateMachine::updateState(StateCondition drivingState) {
     if(drivingState.systemError || drivingState.timedOut) {
-        currentState = state::ERROR;
+        currentState = states::ERROR;
         return;
     }
 
     switch(currentState) {
-        case state::IDLE:
+        case states::IDLE:
             if(drivingState.systemReady && drivingState.startRequested) {
-                currentState = state::TRACK_LANE;
+                currentState = states::TRACK_LANE;
             }
             break;
-        case state::TRACK_LANE:
+        case states::TRACK_LANE:
             if(drivingState.parkingDetected) {
-                currentState = state::TRACK_PARKING;
+                currentState = states::TRACK_PARKING;
             }
             break;
-        case state::TRACK_PARKING:
+        case states::TRACK_PARKING:
             if(drivingState.turnPositionReached) {
-                currentState = state::ROTATING;
+                currentState = states::ROTATING;
             }
             break;
-        case state::PARKING_GUIDE:
+        case states::PARKING_GUIDE:
             if(drivingState.parkingComplete) {
-                currentState = state::COMPLETE;
+                currentState = states::COMPLETE;
             }
             break;
-        case state::ROTATING:
+        case states::ROTATING:
             if(drivingState.rotationComplete) {
-                currentState = state::PARKING_GUIDE;
+                currentState = states::PARKING_GUIDE;
             }
             break;
-        case state::COMPLETE:
+        case states::COMPLETE:
             
             break;
         default:
@@ -40,6 +40,6 @@ void stateMachine::updateState(StateCondition drivingState) {
     }
 }
 
-stateMachine::state stateMachine::getState() {
+stateMachine::states stateMachine::getState() {
     return currentState;
 }

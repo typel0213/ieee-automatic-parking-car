@@ -14,7 +14,7 @@ struct StateCondition {
 
 class stateMachine {
     public:
-        enum class state {
+        enum class states {
             IDLE,
             ROTATING,
             TRACK_LANE,

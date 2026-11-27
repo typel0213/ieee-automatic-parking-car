@@ -9,6 +9,16 @@ motorController::motorController(GPIOController& controller) : gpio(controller) 
     
 }
 
+motorController::~motorController() {
+    try {
+        stop();
+        gpio.setPin(GPIOController::STBY, false);
+    }
+    catch (...) {
+        
+    }
+}
+
 void motorController::setMotors(float left, float right) {
     if(!std::isfinite(left) || !std::isfinite(right)) {
         throw std::invalid_argument("Invalid motor speed");

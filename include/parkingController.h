@@ -9,12 +9,7 @@
 class parkingController {
     public:
         explicit parkingController(motorController& motor, gyroController& gyro);
-        void rotateToAngle(float angle);
-    private:
-        motorController& motor;
-        gyroController& gyro;
-        float targetHeading;
-        std::chrono::steady_clock::time_point rotationStartTime;
+        rotation rotateToAngle(float angle);
 
         enum class rotation {
             IDLE,
@@ -22,6 +17,11 @@ class parkingController {
             COMPLETE,
             FAILED
         };
+    private:
+        motorController& motor;
+        gyroController& gyro;
+        float targetHeading;
+        std::chrono::steady_clock::time_point rotationStartTime;
 
         rotation currentRotation = rotation::IDLE;
 };

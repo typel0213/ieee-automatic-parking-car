@@ -6,7 +6,7 @@
 class motorController {
 public:
     explicit motorController(GPIOController& gpio);
-
+    ~motorController();
     void setMotors(float left, float right);
 
     void forward(float speed);

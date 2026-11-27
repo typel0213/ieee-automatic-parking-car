@@ -1,4 +1,4 @@
-#include "parkingController.h"
+    #include "parkingController.h"
 #include "motorController.h"
 #include "gyroController.h"
 #include "stateMachine.h"
@@ -8,7 +8,8 @@
 #include <chrono>
 #include <cmath>
 
-parkingController::parkingController(motorController& motorControl, gyroController& gyroControl) : motor(motorControl) : gyro(gyroControl){
+parkingController::parkingController(motorController& motorControl, gyroController& gyroControl) 
+: motor(motorControl) : gyro(gyroControl){
     
 }
 
